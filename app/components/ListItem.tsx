@@ -5,7 +5,9 @@ import {
   Text,
   View,
   Image,
+  TouchableHighlight,
 } from "react-native";
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 import AppText from "./AppText";
 import colors from "../config/colors";
 
@@ -13,17 +15,23 @@ interface IProps {
   image: ImageSourcePropType;
   title: string;
   subTitle: string;
+  renderRightActions: () => React.ReactNode;
+  onPress: () => void;
 }
 
-const ListItem = ({ image, title, subTitle }: IProps) => {
+const ListItem = ({ image, title, subTitle, renderRightActions, onPress }: IProps) => {
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={image} />
-      <View>
-        <AppText style={styles.title}>{title}</AppText>
-        <AppText style={styles.subTitle}>{subTitle}</AppText>
-      </View>
-    </View>
+    <Swipeable renderRightActions={renderRightActions}>
+      <TouchableHighlight underlayColor="lightgrey" onPress={onPress}>
+        <View style={styles.container}>
+          <Image style={styles.image} source={image} />
+          <View>
+            <AppText style={styles.title}>{title}</AppText>
+            <AppText style={styles.subTitle}>{subTitle}</AppText>
+          </View>
+        </View>
+      </TouchableHighlight>
+    </Swipeable>
   );
 };
 
@@ -32,6 +40,7 @@ export default ListItem;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    padding: 15,
   },
   image: {
     height: 70,

@@ -3,27 +3,30 @@ import { StyleSheet, ImageBackground, View, Image, Text } from "react-native";
 import colors from "../config/colors";
 import AppText from "../components/AppText";
 import AppButton from "../components/AppButton";
+import Screen from "../components/Screen";
 
 const WelcomeScreen = () => {
   return (
-    <ImageBackground
-      blurRadius={2}
-      style={styles.background}
-      source={require("../assets/background.jpg")}
-    >
-      <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require("../assets/logo-red.png")} />
-        <Text style={styles.tagLine}>Sell Stuff You Don't Need</Text>
-      </View>
-      <View style={styles.buttonsContainer}>
-        <AppButton title="Login" onPress={() => console.log("Login")} />
-        <AppButton
-          title="Register"
-          color="secondary"
-          onPress={() => console.log("Register")}
-        />
-      </View>
-    </ImageBackground>
+    <Screen>
+      <ImageBackground
+        blurRadius={2}
+        style={styles.background}
+        source={require("../assets/background.jpg")}
+      >
+        <View style={styles.logoContainer}>
+          <Image style={styles.logo} source={require("../assets/logo-red.png")} />
+          <Text style={styles.tagLine}>Sell Stuff You Don't Need</Text>
+        </View>
+        <View style={styles.buttonsContainer}>
+          <AppButton title="Login" onPress={() => console.log("Login")} />
+          <AppButton
+            title="Register"
+            color="secondary"
+            onPress={() => console.log("Register")}
+          />
+        </View>
+      </ImageBackground>
+    </Screen>
   );
 };
 

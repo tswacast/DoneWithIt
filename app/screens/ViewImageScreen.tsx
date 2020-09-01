@@ -1,28 +1,31 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Screen from "../components/Screen";
 
 const ViewImageScreen = () => {
   return (
-    <View style={styles.container}>
-      <MaterialCommunityIcons
-        color="white"
-        size={30}
-        style={styles.closeIcon}
-        name="close"
-      />
-      <MaterialCommunityIcons
-        color="white"
-        size={30}
-        style={styles.deleteIcon}
-        name="trash-can-outline"
-      />
-      <Image
-        resizeMode="contain"
-        style={styles.image}
-        source={require("../assets/chair.jpg")}
-      />
-    </View>
+    <Screen>
+      <View style={styles.container}>
+        <MaterialCommunityIcons
+          color="white"
+          size={30}
+          style={styles.closeIcon}
+          name="close"
+        />
+        <MaterialCommunityIcons
+          color="white"
+          size={30}
+          style={styles.deleteIcon}
+          name="trash-can-outline"
+        />
+        <Image
+          resizeMode="contain"
+          style={styles.image}
+          source={require("../assets/chair.jpg")}
+        />
+      </View>
+    </Screen>
   );
 };
 
