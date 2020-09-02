@@ -12,7 +12,8 @@ import AppText from "./AppText";
 import colors from "../config/colors";
 
 interface IProps {
-  ImageComponent?: React.ReactNode;
+  IconComponent?: React.ReactNode;
+  image?: ImageSourcePropType;
   title: string;
   subTitle?: string;
   renderRightActions?: () => React.ReactNode;
@@ -20,7 +21,8 @@ interface IProps {
 }
 
 const ListItem = ({
-  ImageComponent,
+  IconComponent: ImageComponent,
+  image,
   title,
   subTitle,
   renderRightActions,
@@ -31,8 +33,8 @@ const ListItem = ({
       <TouchableHighlight underlayColor="lightgrey" onPress={onPress}>
         <View style={styles.container}>
           {ImageComponent}
-          {/* {ImageComponent && <Image style={styles.image} source={image} />} */}
-          <View>
+          {image && <Image style={styles.image} source={image} />}
+          <View style={styles.detailsContainer}>
             <AppText style={styles.title}>{title}</AppText>
             {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
           </View>
@@ -48,12 +50,16 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     padding: 15,
+    alignItems: "center",
+  },
+  detailsContainer: {
+    marginLeft: 10,
+    justifyContent: "center",
   },
   image: {
     height: 70,
     width: 70,
     borderRadius: 35,
-    marginRight: 10,
   },
   subTitle: {
     color: colors.medium,
