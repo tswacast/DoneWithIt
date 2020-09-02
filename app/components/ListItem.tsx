@@ -7,27 +7,34 @@ import {
   Image,
   TouchableHighlight,
 } from "react-native";
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import Swipeable from "react-native-gesture-handler/Swipeable";
 import AppText from "./AppText";
 import colors from "../config/colors";
 
 interface IProps {
-  image: ImageSourcePropType;
+  ImageComponent?: React.ReactNode;
   title: string;
-  subTitle: string;
-  renderRightActions: () => React.ReactNode;
-  onPress: () => void;
+  subTitle?: string;
+  renderRightActions?: () => React.ReactNode;
+  onPress?: () => void;
 }
 
-const ListItem = ({ image, title, subTitle, renderRightActions, onPress }: IProps) => {
+const ListItem = ({
+  ImageComponent,
+  title,
+  subTitle,
+  renderRightActions,
+  onPress,
+}: IProps) => {
   return (
     <Swipeable renderRightActions={renderRightActions}>
       <TouchableHighlight underlayColor="lightgrey" onPress={onPress}>
         <View style={styles.container}>
-          <Image style={styles.image} source={image} />
+          {ImageComponent}
+          {/* {ImageComponent && <Image style={styles.image} source={image} />} */}
           <View>
             <AppText style={styles.title}>{title}</AppText>
-            <AppText style={styles.subTitle}>{subTitle}</AppText>
+            {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
           </View>
         </View>
       </TouchableHighlight>
