@@ -1,19 +1,32 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TouchableWithoutFeedback, TextInputProps, Modal, Button, FlatList } from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, TextInputProps, Modal, Button, FlatList, TouchableOpacityComponent } from "react-native";
 
 import defaultStyles from "../config/styles";
 import Icon from "./Icon";
 import AppText from "./AppText";
 import Screen from "./Screen";
 import AppPickerItem from "./AppPickerItem";
+import colors from "../config/colors";
 
+interface IPickerItem {
+  label: string;
+  value: string | number;
+}
 interface IProps extends TextInputProps {
+  selectedItem?: IPickerItem;
+  onSelectItem?: (item: IPickerItem) => void;
   placeholder?: string;
   icon?: string;
-  items: {label: (string | number), value: (string | number)}[];
+  items: IPickerItem[];
 }
-const AppPicker = ({ items, placeholder, icon }: IProps) => {
+const AppPicker = ({ selectedItem, onSelectItem, items, placeholder, icon }: IProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handlePressItem = (item: any) => {
+    onSelectItem && onSelectItem(item);
+    setIsModalVisible(false);
+  };
+
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setIsModalVisible(true)}>
@@ -26,7 +39,7 @@ const AppPicker = ({ items, placeholder, icon }: IProps) => {
               backgroundColor={defaultStyles.colors.light}
             />
           )}
-          <AppText style={styles.text}>{placeholder}</AppText>
+          <AppText style={[styles.text, !selectedItem && {color: colors.medium}]}>{selectedItem ? selectedItem.label : placeholder}</AppText>
           <Icon
             size={30}
             name="chevron-down"
@@ -41,7 +54,7 @@ const AppPicker = ({ items, placeholder, icon }: IProps) => {
           <FlatList
             data={items}
             keyExtractor={(item) => item.value.toString()}
-            renderItem={({item}) => <AppPickerItem label={item.label} onPress={() => setIsModalVisible(false)}/>}
+            renderItem={({item}) => <AppPickerItem label={item.label} onPress={() => handlePressItem(item)}/>}
           />
         </Screen>
       </Modal>
