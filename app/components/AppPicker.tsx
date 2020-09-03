@@ -1,33 +1,44 @@
-import React from "react";
-import { StyleSheet, View, TextInput, TextInputProps } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, TouchableWithoutFeedback, TextInputProps, Modal, Button } from "react-native";
 
 import defaultStyles from "../config/styles";
 import Icon from "./Icon";
 import AppText from "./AppText";
+import Screen from "./Screen";
 
 interface IProps extends TextInputProps {
   placeholder?: string;
   icon?: string;
 }
 const AppPicker = ({ placeholder, icon }: IProps) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
   return (
-    <View style={styles.container}>
-      {icon && (
-        <Icon
-          size={30}
-          name={icon}
-          iconColor={defaultStyles.colors.medium}
-          backgroundColor={defaultStyles.colors.light}
-        />
-      )}
-      <AppText style={styles.text}>{placeholder}</AppText>
-      <Icon
-        size={30}
-        name="chevron-down"
-        iconColor={defaultStyles.colors.medium}
-        backgroundColor={defaultStyles.colors.light}
-      />
-    </View>
+    <>
+      <TouchableWithoutFeedback onPress={() => setIsModalVisible(true)}>
+        <View style={styles.container}>
+          {icon && (
+            <Icon
+              size={30}
+              name={icon}
+              iconColor={defaultStyles.colors.medium}
+              backgroundColor={defaultStyles.colors.light}
+            />
+          )}
+          <AppText style={styles.text}>{placeholder}</AppText>
+          <Icon
+            size={30}
+            name="chevron-down"
+            iconColor={defaultStyles.colors.medium}
+            backgroundColor={defaultStyles.colors.light}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+      <Modal visible={isModalVisible} animationType="slide">
+        <Screen>
+          <Button title="Close" onPress={() => setIsModalVisible(false)}/>
+        </Screen>
+      </Modal>
+    </>
   );
 };
 
