@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TouchableWithoutFeedback, TextInputProps, Modal, Button } from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, TextInputProps, Modal, Button, FlatList } from "react-native";
 
 import defaultStyles from "../config/styles";
 import Icon from "./Icon";
 import AppText from "./AppText";
 import Screen from "./Screen";
+import AppPickerItem from "./AppPickerItem";
 
 interface IProps extends TextInputProps {
   placeholder?: string;
   icon?: string;
+  items: {label: (string | number), value: (string | number)}[];
 }
-const AppPicker = ({ placeholder, icon }: IProps) => {
+const AppPicker = ({ items, placeholder, icon }: IProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <>
@@ -36,6 +38,11 @@ const AppPicker = ({ placeholder, icon }: IProps) => {
       <Modal visible={isModalVisible} animationType="slide">
         <Screen>
           <Button title="Close" onPress={() => setIsModalVisible(false)}/>
+          <FlatList
+            data={items}
+            keyExtractor={(item) => item.value.toString()}
+            renderItem={({item}) => <AppPickerItem label={item.label} onPress={() => setIsModalVisible(false)}/>}
+          />
         </Screen>
       </Modal>
     </>
