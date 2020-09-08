@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TouchableWithoutFeedback, TextInputProps, Modal, Button, FlatList, TouchableOpacityComponent } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  TextInputProps,
+  Modal,
+  Button,
+  FlatList,
+  TouchableOpacityComponent,
+} from "react-native";
 
 import defaultStyles from "../config/styles";
 import Icon from "./Icon";
@@ -8,18 +17,24 @@ import Screen from "./Screen";
 import AppPickerItem from "./AppPickerItem";
 import colors from "../config/colors";
 
-interface IPickerItem {
+export interface PickerItem {
   label: string;
   value: string | number;
 }
-interface IProps extends TextInputProps {
-  selectedItem?: IPickerItem;
-  onSelectItem?: (item: IPickerItem) => void;
+interface AppPickerProps extends TextInputProps {
+  selectedItem?: PickerItem;
+  onSelectItem?: (item: PickerItem) => void;
   placeholder?: string;
   icon?: string;
-  items: IPickerItem[];
+  items: PickerItem[];
 }
-const AppPicker = ({ selectedItem, onSelectItem, items, placeholder, icon }: IProps) => {
+const AppPicker = ({
+  selectedItem,
+  onSelectItem,
+  items,
+  placeholder,
+  icon,
+}: AppPickerProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handlePressItem = (item: any) => {
@@ -39,7 +54,11 @@ const AppPicker = ({ selectedItem, onSelectItem, items, placeholder, icon }: IPr
               backgroundColor={defaultStyles.colors.light}
             />
           )}
-          <AppText style={[styles.text, !selectedItem && {color: colors.medium}]}>{selectedItem ? selectedItem.label : placeholder}</AppText>
+          {selectedItem ? (
+            <AppText style={styles.text}>{selectedItem}</AppText>
+          ) : (
+            <AppText style={styles.placeholder}>{placeholder}</AppText>
+          )}
           <Icon
             size={30}
             name="chevron-down"
@@ -50,11 +69,16 @@ const AppPicker = ({ selectedItem, onSelectItem, items, placeholder, icon }: IPr
       </TouchableWithoutFeedback>
       <Modal visible={isModalVisible} animationType="slide">
         <Screen>
-          <Button title="Close" onPress={() => setIsModalVisible(false)}/>
+          <Button title="Close" onPress={() => setIsModalVisible(false)} />
           <FlatList
             data={items}
             keyExtractor={(item) => item.value.toString()}
-            renderItem={({item}) => <AppPickerItem label={item.label} onPress={() => handlePressItem(item)}/>}
+            renderItem={({ item }) => (
+              <AppPickerItem
+                label={item.label}
+                onPress={() => handlePressItem(item)}
+              />
+            )}
           />
         </Screen>
       </Modal>
@@ -76,6 +100,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     margin: 10,
+  },
+  placeholder: {
+    color: defaultStyles.colors.medium,
+    flex: 1,
   },
   text: {
     ...defaultStyles.text,

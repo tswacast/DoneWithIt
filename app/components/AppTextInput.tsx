@@ -4,10 +4,10 @@ import { StyleSheet, View, TextInput, TextInputProps } from "react-native";
 import defaultStyles from "../config/styles";
 import Icon from "./Icon";
 
-interface IProps extends TextInputProps {
+export interface AppTextInputProps extends TextInputProps {
   icon?: string;
 }
-const AppTextInput = ({ icon, ...otherProps }: IProps) => {
+const AppTextInput = ({ icon, ...otherProps }: AppTextInputProps) => {
   return (
     <View style={styles.container}>
       {icon && (
@@ -18,7 +18,11 @@ const AppTextInput = ({ icon, ...otherProps }: IProps) => {
           backgroundColor={defaultStyles.colors.light}
         />
       )}
-      <TextInput style={styles.textInput} {...otherProps} />
+      <TextInput
+        placeholderTextColor={defaultStyles.colors.medium}
+        style={styles.textInput}
+        {...otherProps}
+      />
     </View>
   );
 };

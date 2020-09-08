@@ -3,12 +3,12 @@ import { StyleSheet, Platform, Text, TouchableOpacity } from "react-native";
 
 import colors from "../config/colors";
 
-interface IProps {
+export interface AppButtonProps {
   title?: string;
   color?: "primary" | "secondary";
   onPress?: () => void;
 }
-const AppButton = ({ title, color = "primary", onPress }: IProps) => {
+const AppButton = ({ title, color = "primary", onPress }: AppButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}

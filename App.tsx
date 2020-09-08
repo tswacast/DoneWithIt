@@ -13,21 +13,12 @@ import ListingsScreen from "./app/screens/ListingsScreen";
 import AppTextInput from "./app/components/AppTextInput";
 import { Picker } from "@react-native-community/picker";
 import AppPicker from "./app/components/AppPicker";
-
-const categories = [
-  {label: "Furniture", value: 1},
-  {label: "Clothing", value: 2},
-  {label: "Cameras", value: 3},
-];
+import LoginScreen from "./app/screens/LoginScreen";
+import RegisterScreen from "./app/screens/RegisterScreen";
+import ListingEditScreen from "./app/screens/ListingEditScreen";
 
 export default function App() {
-  const [selectedCategory, setSelectedCategory] = useState<any>();
-  return (
-    <Screen>
-      <AppPicker selectedItem={selectedCategory} onSelectItem={(category) => setSelectedCategory(category)} items={categories} icon="apps" placeholder="Category" />
-      <AppTextInput icon="email" placeholder="Email" />
-    </Screen>
-  );
+  return <ListingEditScreen />;
 }
 
 const styles = StyleSheet.create({
