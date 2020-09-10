@@ -7,37 +7,36 @@ import {
   Modal,
   Button,
   FlatList,
-  TouchableOpacityComponent,
 } from "react-native";
 
 import defaultStyles from "../config/styles";
 import Icon from "./Icon";
 import AppText from "./AppText";
 import Screen from "./Screen";
-import AppPickerItem from "./AppPickerItem";
-import colors from "../config/colors";
+import AppPickerItem, { AppPickerItemProps, PickerItem } from "./AppPickerItem";
 
-export interface PickerItem {
-  label: string;
-  value: string | number;
-}
-interface AppPickerProps extends TextInputProps {
-  selectedItem?: PickerItem;
-  onSelectItem?: (item: PickerItem) => void;
+export interface AppPickerProps<T extends PickerItem> extends TextInputProps {
+  selectedItem?: T;
+  onSelectItem?: (item: T) => void;
+  numberOfColumns?: number;
+  PickerItemComponent?: React.FunctionComponent<AppPickerItemProps<T>>;
   placeholder?: string;
   icon?: string;
-  items: PickerItem[];
+  items: T[];
 }
-const AppPicker = ({
+const AppPicker = <T extends PickerItem>({
   selectedItem,
   onSelectItem,
   items,
+  numberOfColumns,
+  PickerItemComponent = AppPickerItem,
   placeholder,
   icon,
-}: AppPickerProps) => {
+}: AppPickerProps<T>) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handlePressItem = (item: any) => {
+    console.log({ item });
     onSelectItem && onSelectItem(item);
     setIsModalVisible(false);
   };
@@ -55,7 +54,7 @@ const AppPicker = ({
             />
           )}
           {selectedItem ? (
-            <AppText style={styles.text}>{selectedItem}</AppText>
+            <AppText style={styles.text}>{selectedItem.label}</AppText>
           ) : (
             <AppText style={styles.placeholder}>{placeholder}</AppText>
           )}
@@ -73,9 +72,10 @@ const AppPicker = ({
           <FlatList
             data={items}
             keyExtractor={(item) => item.value.toString()}
+            numColumns={numberOfColumns}
             renderItem={({ item }) => (
-              <AppPickerItem
-                label={item.label}
+              <PickerItemComponent
+                item={item}
                 onPress={() => handlePressItem(item)}
               />
             )}

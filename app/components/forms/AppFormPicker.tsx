@@ -1,21 +1,31 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import AppPicker, { PickerItem } from "../AppPicker";
+import AppPicker from "../AppPicker";
 import { useFormikContext } from "formik";
 import ErrorMessage from "./ErrorMessage";
+import { AppPickerItemProps, PickerItem } from "../AppPickerItem";
 
-export interface AppFormPickerProps {
-  items: PickerItem[];
+export interface AppFormPickerProps<T extends PickerItem> {
+  items: T[];
   name: string;
+  numberOfColumns?: number;
+  PickerItemComponent?: React.FunctionComponent<AppPickerItemProps<T>>;
   placeholder: string;
 }
-const AppFormPicker = ({ items, name, placeholder }: AppFormPickerProps) => {
+const AppFormPicker = <T extends PickerItem>({
+  items,
+  name,
+  numberOfColumns,
+  PickerItemComponent,
+  placeholder,
+}: AppFormPickerProps<T>) => {
   const { errors, setFieldValue, touched, values } = useFormikContext();
   return (
     <>
       <AppPicker
         items={items}
+        numberOfColumns={numberOfColumns}
         onSelectItem={(item) => setFieldValue(name, item)}
+        PickerItemComponent={PickerItemComponent}
         placeholder={placeholder}
         selectedItem={(values as { [key: string]: any })[name]}
       />

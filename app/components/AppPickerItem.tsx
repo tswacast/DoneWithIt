@@ -1,23 +1,28 @@
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import AppText from './AppText'
+import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import AppText from "./AppText";
 
-interface IProps {
-    label: string | number;
-    onPress: () => void;
-}
-const AppPickerItem = ({label, onPress}: IProps) => {
-    return (
-        <TouchableOpacity onPress={onPress}>
-            <AppText style={styles.text}>{label}</AppText>
-        </TouchableOpacity>
-    )
+export interface PickerItem {
+  label: string;
+  value: string | number;
 }
 
-export default AppPickerItem
+export interface AppPickerItemProps<T extends PickerItem> {
+  item: T;
+  onPress: () => void;
+}
+const AppPickerItem = ({ item, onPress }: AppPickerItemProps<PickerItem>) => {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <AppText style={styles.text}>{item.label}</AppText>
+    </TouchableOpacity>
+  );
+};
+
+export default AppPickerItem;
 
 const styles = StyleSheet.create({
-    text: {
-        padding: 20
-    }
-})
+  text: {
+    padding: 20,
+  },
+});

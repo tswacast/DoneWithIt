@@ -14,20 +14,21 @@ interface IMessage {
 const initialMessages: IMessage[] = [
   {
     id: 1,
-    title: "T1",
-    description: "D1",
+    title: "Tom Wacaster",
+    description: "I'm interested in this item. Is it still available?",
     image: require("../assets/mosh.jpg"),
   },
   {
     id: 2,
-    title: "T2",
-    description: "D2",
+    title: "Tom Wacaster",
+    description: "Are you fexible on the price?",
     image: require("../assets/mosh.jpg"),
   },
   {
     id: 3,
-    title: "T3",
-    description: "D3",
+    title: "Tom Wacaster",
+    description:
+      "Does this item still have all of the original packaging include documentation and optional attachments?",
     image: require("../assets/mosh.jpg"),
   },
 ];
