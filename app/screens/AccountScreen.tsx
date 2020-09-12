@@ -1,33 +1,45 @@
-import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import React from 'react';
+import { StyleSheet, View, FlatList } from 'react-native';
 
-import Screen from "../components/Screen";
-import ListItem from "../components/ListItem";
-import Icon from "../components/Icon";
-import ListItemSeparator from "../components/ListItemSeparator";
-import defaultStyles from "../config/styles";
+import Screen from '../components/Screen';
+import ListItem from '../components/ListItem';
+import Icon from '../components/Icon';
+import ListItemSeparator from '../components/ListItemSeparator';
+import defaultStyles from '../config/styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AccountStackParamList } from '../navigators/AccountNavigator';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const user = {
-  name: "Tom Wacaster",
-  email: "tswacaster@gmail.com",
-  image: require("../assets/mosh.jpg"),
+  name: 'Tom Wacaster',
+  email: 'tswacaster@gmail.com',
+  image: require('../assets/mosh.jpg'),
 };
 
-const menuItems = [
+const menuItems: {
+  title: string;
+  routeName?: 'Messages';
+  icon: { name: string; backgroundColor: string };
+}[] = [
   {
-    title: "My Listings",
+    title: 'My Listings',
     icon: {
-      name: "format-list-bulleted",
+      name: 'format-list-bulleted',
       backgroundColor: defaultStyles.colors.primary,
     },
   },
   {
-    title: "My Messages",
-    icon: { name: "email", backgroundColor: defaultStyles.colors.secondary },
+    title: 'My Messages',
+    routeName: 'Messages',
+    icon: { name: 'email', backgroundColor: defaultStyles.colors.secondary },
   },
 ];
 
-const AccountScreen = () => {
+interface AccountScreenProps {
+  navigation: StackNavigationProp<AccountStackParamList, 'Account'>;
+}
+
+const AccountScreen = ({ navigation }: AccountScreenProps) => {
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
@@ -46,6 +58,9 @@ const AccountScreen = () => {
                 />
               }
               title={item.title}
+              onPress={() =>
+                item.routeName && navigation.navigate(item.routeName)
+              }
             />
           )}
           ItemSeparatorComponent={ListItemSeparator}
@@ -66,7 +81,7 @@ export default AccountScreen;
 const styles = StyleSheet.create({
   container: {
     marginVertical: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   screen: {
     backgroundColor: defaultStyles.colors.light,
